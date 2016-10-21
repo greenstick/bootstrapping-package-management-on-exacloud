@@ -1,6 +1,6 @@
 # Bootstrapping Package Managers on ExaCloud
 
-Getting a development environment setup on ExaCloud requires a bit of massaging. Below is a set of instructions to setup Miniconda and Linuxbrew to manage your Python and system level software installations, respectively. Of course, be sure you're not running these installations on the head node:
+Getting a development environment setup on ExaCloud requires a bit of massaging. Below is a set of instructions to setup [Miniconda](http://conda.pydata.org/miniconda.html) and [Linuxbrew](http://linuxbrew.sh) to manage your Python and system level software installations, respectively. Of course, be sure you're not running these installations on the head node:
 ```
 condor_submit --interactive
 ```
@@ -18,7 +18,7 @@ wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
 bash Miniconda2-latest-Linux-x86_64.sh
 ```
 
-The first command downloads the package from the (Continuum Analytics website)[http://conda.pydata.org/miniconda.html], while the second step runs the downloaded bash script. The bash script will have you agree to a license [yes] and then setup the root directory for Miniconda which should be `/home/users/USERNAME/packages/miniconda` where packages is the directory we created in the first step. Note that I removed the 2 from the default `/home/users/USERNAME/miniconda2` location, this is optional but something to be mindful of. Finally, it will ask whether you would like to include Miniconda in your .bash_profile, be sure to say [yes] here (the default is [no]).
+The first command downloads the package from the [Continuum Analytics website](http://conda.pydata.org/miniconda.html), while the second step runs the downloaded bash script. The bash script will have you agree to a license [yes] and then setup the root directory for Miniconda which should be `/home/users/USERNAME/packages/miniconda` where packages is the directory we created in the first step. Note that I removed the 2 from the default `/home/users/USERNAME/miniconda2` location, this is optional but something to be mindful of. Finally, it will ask whether you would like to include Miniconda in your .bash_profile, be sure to say [yes] here (the default is [no]).
 
 ### Step 3
 Third, we need to install updated compilers, an updated Git, & cURL:
