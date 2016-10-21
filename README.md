@@ -139,6 +139,6 @@ brew install jdk7
 brew install ruby
 ```
 
-Hope this has been helpful! If you run into any issues or have questions, feel free to send a pull request and I'll try and address them & hammer out this guide to make the commands more robust. 
+Hope this has been helpful! If you run into any issues or have questions, feel free to write an [Issue](https://github.com/greenstick/bootstrapping-package-management-on-exacloud/issues/new) on Github and I'll try and address them & hammer out this guide to make the commands more robust. 
 
 Cheers!
