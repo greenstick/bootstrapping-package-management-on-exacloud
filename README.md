@@ -1,13 +1,12 @@
 # Bootstrapping Package Managers on ExaCloud
 
-Getting a development environment setup on ExaCloud requires a bit of massaging. Below is a set of instructions to setup [Miniconda](http://conda.pydata.org/miniconda.html) and [Linuxbrew](http://linuxbrew.sh) to manage your Python and system level software installations, respectively. Of course, be sure you're not running these installations on the head node:
-```
-condor_submit --interactive
-```
+Unless you're a Superuser, setting a development environment setup on ExaCloud requires a bit of massaging. Below is a set of instructions to setup [Miniconda](http://conda.pydata.org/miniconda.html) and [Linuxbrew](http://linuxbrew.sh) to manage your Python and system level software installations, respectively.
+
 
 ### Step 1
-First, we setup a packages directory:
+First, log on to ExaCloud, then start an interactive session (not using the head node) and setup a packages directory:
 ```
+condor_submit --interactive
 cd ~/ && mkdir packages
 ```
 
@@ -18,7 +17,7 @@ wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
 bash Miniconda2-latest-Linux-x86_64.sh
 ```
 
-The first command downloads the package from the [Continuum Analytics website](http://conda.pydata.org/miniconda.html), while the second step runs the downloaded bash script. The bash script will have you agree to a license [yes] and then setup the root directory for Miniconda which should be `/home/users/USERNAME/packages/miniconda` where packages is the directory we created in the first step. Note that I removed the 2 from the default `/home/users/USERNAME/miniconda2` location, this is optional but something to be mindful of. Finally, it will ask whether you would like to include Miniconda in your .bash_profile, be sure to say [yes] here (the default is [no]).
+The first command downloads an installation script from the [Continuum Analytics website](http://conda.pydata.org/miniconda.html), while the second step runs the downloaded bash script. The bash script will have you agree to a license [yes] and then setup the root directory for Miniconda which should be `/home/users/USERNAME/packages/miniconda` where packages is the directory we created in the first step. Note that I removed the 2 from the default `/home/users/USERNAME/miniconda2` location, this is optional but something to be mindful of. Finally, it will ask whether you would like to include Miniconda in your .bash_profile, be sure to say [yes] here (the default is [no]).
 
 ### Step 3
 Third, we need to install updated compilers, an updated Git, & cURL:
@@ -30,7 +29,7 @@ conda install git
 conda install curl
 ```
 
-We now have updated compilers, Git, and cURL. We need Ruby to install Linuxbrew too, but ExaCloud has an installation that appears to work for this purpose. If you'd like to update it later, you can always do it using Linuxbrew using the command `brew install ruby`.
+We now have updated compilers, Git, and cURL. We need Ruby to install Linuxbrew too, but ExaCloud has an installation that appears to work for this purpose. If you'd like to install your own update version later, you can always do it using Linuxbrew using the command `brew install ruby`.
 
 ### Step 4
 Fourth, we need to update our `.bash_profile` to make sure it knows where to find the new compilers:
@@ -42,9 +41,9 @@ echo 'export OBJCXX="$HOME/packages/miniconda/bin/g++"' >>~/.bash_profile
 ```
 Note: *If you used an alternate path for your miniconda installation, be sure to update the paths above to reflect that.*
 
-Log off of ExaCloud. Log back on, and the `.bash_profile` changes should take effect.
+Exit the interactive session and log off of ExaCloud. Log back on, and the changes to your `.bash_profile` should take effect.
 
-Again, start a new session on a child node:
+Again, start a new interactive session on a child node:
 ```
 condor_submit --interactive
 ```
@@ -61,7 +60,7 @@ Sixth, edit your $PATH variable in your .bash_profile to point to the Linuxbrew 
 echo 'export PATH="$HOME/.linuxbrew/bin:$PATH"' >>~/.bash_profile
 ```
 
-Again, log off of ExaCloud. Log back on, and the .bash_profile changes should take effect.
+Again, exit the interactive session and log off of ExaCloud. Log back on, and the .bash_profile changes should take effect.
 
 ### Step 7
 Finally, check Linuxbrew installed correctly:
@@ -71,7 +70,7 @@ brew doctor
 ```
 Note: *When working with Linuxbrew, it's always a good idea to run the commands above before you install anything (i.e. any day you log on to ExaCloud and decide to install or update your packages). This ensures that you won't install packages that break or fail to install due to an incorrect Linuxbrew configuration or package dependency. If you do see any new Warning messages, its a good idea to copy them each into Google and make sure that none will cause you any trouble.*
 
-You may get some warnings. The ones I get are:
+You may get some warnings. Most of these warnings shouldn't cause you (or your installed packages!) any trouble. The ones I get are:
 ```
 Warning: Setting LD_* vars can break dynamic linking.
 Set variables:
@@ -92,7 +91,16 @@ script of the same name. We found the following "config" scripts:
   /opt/rocks/bin/python2.6-config
 ```
 
-If you got any other warnings, check Stackoverflow to make sure they're not important. 
+If you got any other warnings, check Stackoverflow to make sure they're not important and, if you're feeling ambitious, following the steps to eliminate them. If having these warnings drives you crazy, look to Step 8 to clear some of them. Note some cannot be cleared as they require `sudo` access on ExaCloud, specifically:
+```
+Having additional scripts in your path can confuse software installed via
+Homebrew if the config script overrides a system or Homebrew provided
+script of the same name. We found the following "config" scripts:
+  /opt/ganglia/bin/ganglia-config
+  /opt/rocks/bin/python-config
+  /opt/rocks/bin/xml2-config
+  /opt/rocks/bin/python2.6-config
+```
 
 ### Step 8 (Optional)
 Strictly speaking, once you have Linuxbrew you don't need Miniconda you can delete it. That said, I've found certain dependencies available on Miniconda that aren't explicitly available on Linuxbrew and it's great for managing virtual environments and installing Python packages (replaces `pip`):
