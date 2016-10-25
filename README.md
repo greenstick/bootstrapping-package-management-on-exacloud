@@ -7,6 +7,8 @@ brew install PACKAGE
 
 Pretty nifty, eh?
 
+And as an added bonus, if you've ever had errors compiling packages on ExaCloud due to unsupported (old) compilers, the setup below will likely resolve these issues as well.
+
 ### Step 1
 First, log on to ExaCloud, then start an interactive session (not using the head node) and setup a packages directory:
 ```
@@ -53,7 +55,7 @@ condor_submit --interactive
 ```
 
 ### Step 5
-Fifth, install Linuxbrew. Copy the command below to install Linuxbrew:
+Fifth, copy the command below to install Linuxbrew:
 ```
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install)"
 ```
@@ -62,6 +64,7 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master
 Sixth, edit your $PATH variable in your .bash_profile to point to your Linuxbrew installation:
 ```
 echo 'export PATH="$HOME/.linuxbrew/bin:$PATH"' >>~/.bash_profile
+echo 'export PATH="$HOME/.linuxbrew/sbin:$PATH"' >>~/.bash_profile
 ```
 
 Again, exit the interactive session and log off of ExaCloud. Log back on, and the changes to your `.bash_profile` will take effect.
@@ -74,7 +77,7 @@ brew doctor
 ```
 Note: *When working with Linuxbrew, it's always a good idea to run the commands above before you install anything (i.e. any day you log on to ExaCloud and decide to install or update your packages). This ensures that you won't install packages that break or fail to install due to an incorrect Linuxbrew configuration or package dependency. If you do see any new Warning messages, its a good idea to copy them each into Google and make sure that none will cause you any trouble.*
 
-You may get some warnings. Most of these warnings shouldn't cause you (or your installed packages!) any trouble. The ones I get are:
+You may get some warnings. Most of these warnings shouldn't cause you (or your installed packages!) any trouble. The ones I get are (you may see a few more, to understand why see Step 8):
 ```
 Warning: Setting LD_* vars can break dynamic linking.
 Set variables:
@@ -95,7 +98,7 @@ script of the same name. We found the following "config" scripts:
   /opt/rocks/bin/python2.6-config
 ```
 
-If you got any other warnings, check Stackoverflow to make sure they're not important and, if you're feeling ambitious, follow the steps to clear them. If having these warnings drives you crazy, look to Step 8 for a known way to clear some of them. Note that some warnings cannot be cleared as they require file and directory privileges not available to non-administators on ExaCloud, specifically:
+If you got any other warnings, check Stackoverflow to make sure they're not important and, if you're feeling ambitious, follow the steps to clear them – but be careful; if you're not starting fresh you could upset software that you already have installed. I should also note that some warnings cannot be cleared as they require file and directory privileges not available to non-administators on ExaCloud, specifically:
 ```
 Having additional scripts in your path can confuse software installed via
 Homebrew if the config script overrides a system or Homebrew provided
@@ -106,8 +109,8 @@ script of the same name. We found the following "config" scripts:
   /opt/rocks/bin/python2.6-config
 ```
 
-### Step 8 (Optional)
-Strictly speaking, once you have Linuxbrew you don't need Miniconda you can delete it. That said, I've found certain dependencies available on Miniconda that aren't explicitly available on Linuxbrew and it's great for managing virtual environments and installing Python packages (replaces `pip`):
+### Step 8 (Optional Cleanup)
+Strictly speaking, once you have Linuxbrew you don't need Miniconda you can delete it. That said, I've found certain dependencies available on Miniconda that aren't explicitly available on Linuxbrew. Of course, it's also great for managing virtual environments and installing Python packages (i.e. it works in place of `pip`):
 ```
 conda install numpy
 conda install scipy
@@ -115,14 +118,34 @@ conda install scikit-learn
 # ...etc.
 ```
 
-If you'd rather just use Linuxbrew (and pip for Python package management) you can install new compilers, Git, and cURL with Linuxbrew and delete Miniconda:
+To just use Linuxbrew (and pip for Python package management), you'll need to install new compilers, Git, and cURL with Linuxbrew and delete Miniconda:
 ```
 brew install gcc
 brew install git
 brew install curl
 cd ~/packages && rm -rf miniconda
 ```
-Note: *Again, if your miniconda installation is somewhere else, be sure to `cd` to where you installed it and remove the directory from there.*
+
+Next, you should modify the Miniconda references we exported in Step 4 from your ~/.bash_profile. To do this, use vim, emacs, nano, or your preferred CLI editor. The lines in your .bash_profile should look like this:
+```
+export CC="$HOME/packages/miniconda/bin/gcc"
+export CXX="$HOME/packages/miniconda/bin/g++"
+export OBJC="$HOME/packages/miniconda/bin/gcc"
+export OBJCXX="$HOME/packages/miniconda/bin/g++"
+```
+Note: *Again, if your Miniconda installation is somewhere else, these paths may look different (but you probably already know that).*
+
+They should to be changed to:
+```
+export CC="$HOME/.linuxbrew/bin/gcc"
+export CXX="$HOME/.linuxbrew/bin/g++"
+export OBJC="$HOME/.linuxbrew/bin/gcc"
+export OBJCXX="$HOME/.linuxbrew/bin/g++"
+```
+
+A few notes on Step 8: 
+* The . in of the folder name .linuxbrew means the folder is a system folder. Folders following this naming convention are generally hidden from the user. That said, you can still `cd` into them (e.g. to access the location of your compilers, you can always type `cd ~/.linuxbrew/bin`)
+* It may not be strictly required to set the variables above unless you're compiling your own source code (i.e. in C/C++, etc.), but it's good to set it up so you won't encounter any future problems. 
 
 #### Reap The Rewards!
 Finally, some packages that may be of interest to install (because that's what we're really after, right?)
@@ -137,8 +160,10 @@ brew install jdk
 brew install jdk7
 # Ruby
 brew install ruby
+Node.js
+brew install node
 ```
 
-Hope this has been helpful! If you run into any issues or have questions, feel free to write an [Issue](https://github.com/greenstick/bootstrapping-package-management-on-exacloud/issues/new) on Github and I'll try and address them & hammer out this guide to make the commands more robust. 
+Hope this has been helpful! If you run into any issues or have questions, feel free to create an [Issue](https://github.com/greenstick/bootstrapping-package-management-on-exacloud/issues/new) and I'll try and address them & hammer out this guide to make it as easy as possible. 
 
 Cheers!
