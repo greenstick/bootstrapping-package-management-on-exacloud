@@ -135,7 +135,7 @@ export OBJCXX="$HOME/packages/miniconda/bin/g++"
 ```
 Note: *Again, if your Miniconda installation is somewhere else, these paths may look different (but you probably already know that).*
 
-They should to be changed to:
+They should be changed to:
 ```
 export CC="$HOME/.linuxbrew/bin/gcc"
 export CXX="$HOME/.linuxbrew/bin/g++"
