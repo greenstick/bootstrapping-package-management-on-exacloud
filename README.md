@@ -147,7 +147,7 @@ A few notes on Step 8:
 * It may not be strictly required to set the build variables above unless you're compiling your own source code (i.e. in C/C++, etc.), but it's nonetheless a good idea to set them up so you won't encounter any future problems should the occasion arise. 
 
 #### Reap The Rewards!
-Finally, some packages that may be of interest to install* (because that's what we're really after, right?)
+Finally, some packages that may be of interest to install (because that's what we're really after, right?)
 ```
 #
 # Some Languages
