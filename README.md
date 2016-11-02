@@ -1,6 +1,6 @@
 # Bootstrapping Package Managers on ExaCloud
 
-Unless you're a Superuser, setting up a development environmenton ExaCloud requires a bit of massaging. Below is a set of instructions to install [Miniconda](http://conda.pydata.org/miniconda.html) and [Linuxbrew](http://linuxbrew.sh) to manage your Python and system level software installations, respectively. This means, if you need to install most any software package, all you'll need to do is type into your terminal:
+Unless you're a Superuser, setting up a development environment and managing software installations on ExaCloud requires a bit of massaging. Below is a set of instructions to install [Miniconda](http://conda.pydata.org/miniconda.html) and [Linuxbrew](http://linuxbrew.sh) to manage your Python and system level software installations, respectively. This means, if you need to install most any software package, all you'll need to do is type into your terminal:
 ```
 brew install PACKAGE
 ```
@@ -146,7 +146,7 @@ A few notes on Step 8:
 * The `.` in of the folder name .linuxbrew means the folder is a system folder. Folders following this naming convention are generally hidden from the user. That said, you can still `cd` into them (e.g. to access the location of your compilers, you can always type `cd ~/.linuxbrew/bin`)
 * It may not be strictly required to set the build variables above unless you're compiling your own source code (i.e. in C/C++, etc.), but it's nonetheless a good idea to set them up so you won't encounter any future problems should the occasion arise. 
 
-#### Reap The Rewards!
+#### Reap The Rewards (and Some Final Details)!
 Finally, some packages that may be of interest to install (because that's what we're really after, right?)
 ```
 #
@@ -229,7 +229,7 @@ brew install science/tophat
 # Velvet
 brew install science/velvet
 ```
-Note: *Some of the real benefits of Linuxbrew (and any package manager) are consistency in installation practices, smart (automated) dependency management, and ease of versioning. That said, ExaCloud does have some of the software provided by the recipes above pre-installed. To see what software (and versions) are already installed, check out [exainfo.ohsu.edu](exainfo.ohsu.edu). If you're interested in specific versions of a software, see the Linuxbrew documentation on how to install a specific version.*
+Note: *Some of the real benefits of Linuxbrew (and any package manager) are consistency in installation practices, smart (automated) dependency management, and ease of versioning. That said, ExaCloud does have some of the software provided by the recipes above pre-installed. To see what software (and versions) are already installed, check out [exainfo.ohsu.edu](http://exainfo.ohsu.edu) (you must be logged on to the OHSU network). If you're interested in specific versions of a software, see the [Linuxbrew documentation](http://linuxbrew.sh) or type `man brew` into your terminal to learn how to install a specific version.*
 
 Not sure which installation recipe you need? The command below has you covered:
 ```
