@@ -13,6 +13,7 @@ And as an added bonus, if you've ever had errors compiling packages on ExaCloud 
 Log on to ExaCloud, then start an interactive session (i.e. don't use the head node) and setup a `packages` directory:
 ```
 condor_submit --interactive
+# Wait for a moment while ExaCloud logs you onto a child node...then...
 cd ~/ && mkdir packages
 ```
 
@@ -35,7 +36,7 @@ conda install git
 conda install curl
 ```
 
-We now have updated compilers, Git, and cURL. We need Ruby to install Linuxbrew too, but ExaCloud has an installation that appears to work for this purpose. If you'd like to install your own updated version later, you can always do this using Linuxbrew and the command `brew install ruby`.
+We now have updated compilers, Git, and cURL. 
 
 ### Step 4
 We need to update the build references in our `~/.bash_profile` to use the new compilers:
@@ -49,13 +50,13 @@ Note: *If you used an alternate path for your miniconda installation, be sure to
 
 Exit the interactive session and log off of ExaCloud. Log back on, and the changes to your `~/.bash_profile` will take effect.
 
-Again, start a new interactive session on a child node:
-```
-condor_submit --interactive
-```
-
 ### Step 5
-Copy the command below to install Linuxbrew:
+Are you reaching for an interactive session on the child node? That's great, but not so fast! We'll actually be installing Linuxbrew on the head node. However, before doing so, it's worth explaining the rationale behind why we'll be using the head node (because it's an exception to a general rule of thumb when using any cluster computer: Always do your computing on a child node): 
+* Ruby is not available on the child nodes and is required to install Linuxbrew.
+* The head node is designed to handle a degree of network traffic; the linuxbrew package is a small (~1MB) and a one time installation requiring no significant system resources (i.e. compilation).
+* This quick network request is less resource intensive than downloading and installing Ruby (which, given the average ExaCloud user, is unlikely be used outside of this guide).
+
+So, to install Linuxbrew, copy the command below:
 ```
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install)"
 ```
@@ -67,11 +68,13 @@ echo 'export PATH="$HOME/.linuxbrew/bin:$PATH"' >>~/.bash_profile
 echo 'export PATH="$HOME/.linuxbrew/sbin:$PATH"' >>~/.bash_profile
 ```
 
-Again, exit the interactive session and log off of ExaCloud. Log back on, and the changes to your `~/.bash_profile` will take effect.
+Again, log off of ExaCloud. Log back on, and the changes to your `~/.bash_profile` will take effect.
 
 ### Step 7
-Finally, check that Linuxbrew installed correctly:
+Finally, start an interactive session, and check that Linuxbrew installed correctly:
 ```
+condor_submit --interactive
+# Wait for a moment while ExaCloud logs you onto a child node...then...
 brew doctor
 ```
 Note: *When working with Linuxbrew, it's always a good idea to run `brew doctor` before you install anything (i.e. any day you log on to ExaCloud and decide to install or update your packages). This ensures that you won't install packages that break or fail to install due to an incorrect Linuxbrew configuration or package dependency. If you do see any new Warning messages, its a good idea to copy them each into a search engine and make sure that none will cause you any trouble.*
@@ -111,10 +114,10 @@ script of the same name. We found the following "config" scripts:
 ### Step 8 (Optional Cleanup)
 Strictly speaking, once you have Linuxbrew you don't need Miniconda and can delete it. That said, I've found certain dependencies available on Miniconda that aren't explicitly available on Linuxbrew. Of course, it's also great for managing virtual environments and installing Python packages (i.e. it works in place of `pip`):
 ```
+# For example...
 conda install numpy
 conda install scipy
 conda install scikit-learn
-# ...etc.
 ```
 
 To just use Linuxbrew (and pip for Python package management), you'll need to install new compilers, Git, and (optionally) cURL with Linuxbrew, then delete Miniconda:
@@ -147,7 +150,7 @@ A few notes on Step 8:
 * It may not be strictly required to set the build variables above unless you're compiling your own source code (i.e. in C/C++, etc.), but it's nonetheless a good idea to set them up so you won't encounter any future problems should the occasion arise. 
 
 #### Reap The Rewards (and Some Final Details)!
-Finally, some packages that may be of interest to install (because that's what we're really after, right?)
+Finally, some packages that may be of interest to install *while not on the head node* (because that's what we're really after, right?)
 ```
 #
 # Some Languages
