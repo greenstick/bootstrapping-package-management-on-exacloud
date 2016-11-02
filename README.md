@@ -10,14 +10,14 @@ Pretty nifty, eh?
 And as an added bonus, if you've ever had errors compiling packages on ExaCloud due to unsupported (old) compilers, the setup has been designed to resolve these issues as well.
 
 ### Step 1
-First, log on to ExaCloud, then start an interactive session (i.e. don't use the head node) and setup a `packages` directory:
+Log on to ExaCloud, then start an interactive session (i.e. don't use the head node) and setup a `packages` directory:
 ```
 condor_submit --interactive
 cd ~/ && mkdir packages
 ```
 
 ### Step 2
-Second, download and install Miniconda (x64, Python 2 version):
+Download and install Miniconda (x64, Python 2 version):
 ```
 wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
 bash Miniconda2-latest-Linux-x86_64.sh
@@ -26,7 +26,7 @@ bash Miniconda2-latest-Linux-x86_64.sh
 The first command downloads an installation script from the [Continuum Analytics website](http://conda.pydata.org/miniconda.html), while the second step runs the downloaded bash script. The bash script will have you agree to a license ('yes') and then setup the root directory for Miniconda, which should be `/home/users/USERNAME/packages/miniconda` (where packages is the directory we created in the first step). Note that I removed the `2` from the default Miniconda installation path (`/home/users/USERNAME/miniconda2`), this is optional but something to be mindful of in the following steps if you opt not to do this. Finally, Miniconda will ask whether you would like to include Miniconda in your `~/.bash_profile`, be sure to say `yes` here (the default is `[no]`).
 
 ### Step 3
-Third, we need to install updated compilers, an updated Git, & cURL:
+We need to install updated compilers, an updated Git, & cURL:
 ```
 conda install gcc
 conda install libgcc
@@ -38,7 +38,7 @@ conda install curl
 We now have updated compilers, Git, and cURL. We need Ruby to install Linuxbrew too, but ExaCloud has an installation that appears to work for this purpose. If you'd like to install your own updated version later, you can always do this using Linuxbrew and the command `brew install ruby`.
 
 ### Step 4
-Fourth, we need to update the build references in our `~/.bash_profile` to use the new compilers:
+We need to update the build references in our `~/.bash_profile` to use the new compilers:
 ```
 echo 'export CC="$HOME/packages/miniconda/bin/gcc"' >>~/.bash_profile
 echo 'export CXX="$HOME/packages/miniconda/bin/g++"' >>~/.bash_profile
@@ -55,13 +55,13 @@ condor_submit --interactive
 ```
 
 ### Step 5
-Fifth, copy the command below to install Linuxbrew:
+Copy the command below to install Linuxbrew:
 ```
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install)"
 ```
 
 ### Step 6
-Sixth, edit your $PATH variable in your `~/.bash_profile` to point to your Linuxbrew installation:
+Edit your $PATH variable in your `~/.bash_profile` to point to your Linuxbrew installation:
 ```
 echo 'export PATH="$HOME/.linuxbrew/bin:$PATH"' >>~/.bash_profile
 echo 'export PATH="$HOME/.linuxbrew/sbin:$PATH"' >>~/.bash_profile
@@ -147,27 +147,98 @@ A few notes on Step 8:
 * It may not be strictly required to set the build variables above unless you're compiling your own source code (i.e. in C/C++, etc.), but it's nonetheless a good idea to set them up so you won't encounter any future problems should the occasion arise. 
 
 #### Reap The Rewards!
-Finally, some packages that may be of interest to install (because that's what we're really after, right?)
+Finally, some packages that may be of interest to install* (because that's what we're really after, right?)
 ```
+#
+# Some Languages
+#
+
 # R Language
 brew install science/r
+
 # Python 2.7.x
 brew install python
+
 # Python 3.5.x
 brew install python3
+
 # Java 1.8
 brew install jdk
+
 # Java 1.7
 brew install jdk7
+
+# Octave
+brew install science/octave
+
 # Ruby
 brew install ruby
+
 Node.js
 brew install node
+
+#
+# Some Bioinformatics Tools
+#
+
+# Bowtie
+brew install science/bowtie
+
+# Bowtie 2
+brew install science/bowtie2
+
+# BWA
+brew install science/bwa
+
+# Clustal W
+brew install science/clustal-w
+
+# Clustal Omega
+brew install science/clustal-omega
+
+# Cufflinks
+brew install science/cufflinks
+
+# FastQC
+brew install science/fastqc
+
+# GATK
+brew install science/gatk
+
+# Novoaligner
+brew install science/novoaligner
+
+# Picard
+brew install science/picard-tools
+
+# Samtools
+brew install science/samtools
+
+# Snpeff
+brew install science/snpeff
+
+# Soap deNovo
+brew install science/soapdenovo
+
+# SRA Toolkit
+brew install science/sratoolkit
+
+# Tophat
+brew install science/tophat
+
+# Velvet
+brew install science/velvet
 ```
+Note: *Some of the real benefits of Linuxbrew (and any package manager) are consistency in installation practices, smart (automated) dependency management, and ease of versioning. That said, ExaCloud does have some of the software provided by the recipes above pre-installed. To see what software (and versions) are already installed, check out [exainfo.ohsu.edu](exainfo.ohsu.edu). If you're interested in specific versions of a software, see the Linuxbrew documentation on how to install a specific version.*
 
 Not sure which installation recipe you need? The command below has you covered:
 ```
 brew search PACKAGE
+```
+
+Want to keep your search science-y?
+```
+brew search science
 ```
 
 Hope this has been helpful! If you run into any issues or have questions, please create an [Issue](https://github.com/greenstick/bootstrapping-package-management-on-exacloud/issues/new) and I'll try and address them promptly – the aim is to make this guide as straightforwad and easy as possible. 
