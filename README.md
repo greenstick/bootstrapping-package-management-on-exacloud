@@ -35,8 +35,7 @@ conda install libgfortran
 conda install git
 conda install curl
 ```
-
-We now have updated compilers, Git, and cURL. 
+We now have updated compilers, Git, and cURL. Yay.
 
 ### Step 4
 We need to update the build references in our `~/.bash_profile` to use the new compilers:
@@ -46,7 +45,7 @@ echo 'export CXX="$HOME/packages/miniconda/bin/g++"' >>~/.bash_profile
 echo 'export OBJC="$HOME/packages/miniconda/bin/gcc"' >>~/.bash_profile
 echo 'export OBJCXX="$HOME/packages/miniconda/bin/g++"' >>~/.bash_profile
 ```
-Note: *If you used an alternate path for your miniconda installation, be sure to update the paths above to reflect that.*
+Note: *If you used an alternate path for your Miniconda installation, be sure to update the paths above to reflect that.*
 
 Exit the interactive session and log off of ExaCloud. Log back on, and the changes to your `~/.bash_profile` will take effect.
 
@@ -54,7 +53,7 @@ Exit the interactive session and log off of ExaCloud. Log back on, and the chang
 Are you reaching for an interactive session on the child node? That's great, but not so fast! We'll actually be installing Linuxbrew on the head node. However, before doing so, it's worth explaining the rationale behind why we'll be using the head node (because it's an exception to a general rule of thumb when using any cluster computer: Always do your computing on a child node): 
 * Ruby is not available on the child nodes and is required to install Linuxbrew.
 * The head node is designed to handle a degree of network traffic; the linuxbrew package is a small (~1MB) and a one time installation requiring no significant system resources (i.e. compilation).
-* This quick network request is less resource intensive than downloading and installing Ruby (which, given the average ExaCloud user, is unlikely be used outside of this guide).
+* This quick network request is less resource intensive than downloading and installing Ruby (which, given the average ExaCloud user, is unlikely to be used outside of this guide anyway).
 
 So, to install Linuxbrew, copy the command below:
 ```
@@ -120,12 +119,11 @@ conda install scipy
 conda install scikit-learn
 ```
 
-To just use Linuxbrew (and pip for Python package management), you'll need to install new compilers, Git, and (optionally) cURL with Linuxbrew, then delete Miniconda:
+To just use Linuxbrew (and `pip` for Python package management), you'll need to install new compilers, Git, and (optionally) cURL with Linuxbrew, update your build references, then delete Miniconda:
 ```
 brew install gcc
 brew install git
 brew install curl
-~/packages && rm -rf miniconda
 ```
 
 Next, you should modify the Miniconda build references we exported in Step 4 from your `~/.bash_profile`. To do this, use vim, emacs, nano, or your preferred CLI-based editor. The lines in your `~/.bash_profile` should look like this:
@@ -143,6 +141,11 @@ export CC="$HOME/.linuxbrew/bin/gcc"
 export CXX="$HOME/.linuxbrew/bin/g++"
 export OBJC="$HOME/.linuxbrew/bin/gcc"
 export OBJCXX="$HOME/.linuxbrew/bin/g++"
+```
+
+Finally, remove Miniconda:
+```
+cd ~/packages && rm -rf miniconda
 ```
 
 A few notes on Step 8: 
