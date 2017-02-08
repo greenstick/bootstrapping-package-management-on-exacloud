@@ -27,8 +27,9 @@ bash Miniconda2-latest-Linux-x86_64.sh
 The first command downloads an installation script from the [Continuum Analytics website](http://conda.pydata.org/miniconda.html), while the second step runs the downloaded bash script. The bash script will have you agree to a license ('yes') and then setup the root directory for Miniconda, which should be `/home/users/USERNAME/packages/miniconda` (where packages is the directory we created in the first step). Note that I removed the `2` from the default Miniconda installation path (`/home/users/USERNAME/miniconda2`), this is optional but something to be mindful of in the following steps if you opt not to do this. Finally, Miniconda will ask whether you would like to include Miniconda in your `~/.bash_profile`, be sure to say `yes` here (the default is `[no]`).
 
 ### Step 3
-We need to install updated compilers, an updated Git, & cURL:
+We need to install updated compilers, an updated Git, & cURL.
 ```
+pip install numpy
 conda install gcc
 conda install libgcc
 conda install libgfortran
@@ -36,6 +37,8 @@ conda install git
 conda install curl
 ```
 We now have updated compilers, Git, and cURL. Yay.
+
+Note: Funny enough, there appears to be an [issue](https://github.com/greenstick/bootstrapping-package-management-on-exacloud/issues/1) with Miniconda requiring NumPy to install the compilers (and probably other software), hence the first command above being to install NumPy with pip. If anyone comes across any other funky dependencies please let me know. Kthxbai.
 
 ### Step 4
 We need to update the build references in our `~/.bash_profile` to use the new compilers:
