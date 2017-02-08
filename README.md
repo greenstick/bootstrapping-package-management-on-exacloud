@@ -9,6 +9,9 @@ Pretty nifty, eh?
 
 And as an added bonus, if you've ever had errors compiling packages on ExaCloud due to unsupported (old) compilers, the setup has been designed to resolve these issues as well.
 
+### Uhhh...This Don't Work
+If you run into any issues or have questions, please create an [Issue](https://github.com/greenstick/bootstrapping-package-management-on-exacloud/issues/new) and I'll try and address them promptly – the aim is to make this guide as easy to use and straightforward as possible. 
+
 ### Step 1
 Log on to ExaCloud, then start an interactive session (i.e. don't use the head node) and setup a `packages` directory:
 ```
@@ -250,6 +253,5 @@ Want to keep your search science-y?
 brew search science
 ```
 
-Hope this has been helpful! If you run into any issues or have questions, please create an [Issue](https://github.com/greenstick/bootstrapping-package-management-on-exacloud/issues/new) and I'll try and address them promptly – the aim is to make this guide as straightforwad and easy as possible. 
-
+Hope this has been helpful,
 Cheers!
