@@ -38,7 +38,7 @@ conda install curl
 ```
 We now have updated compilers, Git, and cURL. Yay.
 
-Note: Funny enough, there appears to be an [issue](https://github.com/greenstick/bootstrapping-package-management-on-exacloud/issues/1) with Miniconda requiring NumPy to install the compilers (and probably other software), hence the first command above being to install NumPy with pip. If anyone comes across any other funky dependencies please let me know. Kthxbai.
+Note: *Funny enough, there appears to be an [issue](https://github.com/greenstick/bootstrapping-package-management-on-exacloud/issues/1) with Miniconda requiring NumPy to install the compilers (and probably other software), hence the first command above being to install NumPy with pip. If anyone comes across any other funky dependencies please let me know. Kthxbai.*
 
 ### Step 4
 We need to update the build references in our `~/.bash_profile` to use the new compilers:
