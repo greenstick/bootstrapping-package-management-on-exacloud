@@ -32,7 +32,6 @@ The first command downloads an installation script from the [Continuum Analytics
 ### Step 3
 We need to install updated compilers, an updated Git, & cURL.
 ```
-pip install numpy
 conda install gcc
 conda install libgcc
 conda install libgfortran
@@ -41,7 +40,7 @@ conda install curl
 ```
 We now have updated compilers, Git, and cURL. Yay.
 
-Note: *Funny enough, there appears to be an [issue](https://github.com/greenstick/bootstrapping-package-management-on-exacloud/issues/1) with Miniconda requiring NumPy to install the compilers (and probably other software), hence the first command above being to install NumPy with pip. If anyone comes across any other funky dependencies please let me know. Kthxbai.*
+Note: *I documented an [issue](https://github.com/greenstick/bootstrapping-package-management-on-exacloud/issues/1) that was brought to my attention regarding Miniconda requiring NumPy to install the compilers (and probably other software). The issue may have been user-specific, however, if you find Miniconda complaining about needing some Python module, go ahead and install it e.g. `pip install numpy `. Also, if you come across any other funky dependency requirements please let me know. Kthxbai.*
 
 ### Step 4
 We need to update the build references in our `~/.bash_profile` to use the new compilers:
