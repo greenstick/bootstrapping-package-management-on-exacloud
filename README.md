@@ -29,6 +29,8 @@ bash Miniconda2-latest-Linux-x86_64.sh
 
 The first command downloads an installation script from the [Continuum Analytics website](http://conda.pydata.org/miniconda.html), while the second step runs the downloaded bash script. The bash script will have you agree to a license ('yes') and then setup the root directory for Miniconda, which should be `/home/users/USERNAME/packages/miniconda` (where packages is the directory we created in the first step). Note that I removed the `2` from the default Miniconda installation path (`/home/users/USERNAME/miniconda2`), this is optional but something to be mindful of in the following steps if you opt not to do this. Finally, Miniconda will ask whether you would like to include Miniconda in your `~/.bash_profile`, be sure to say `yes` here (the default is `[no]`).
 
+Be sure to log out and log back in for the updated `~/.bash_profile` to take effect. 
+
 ### Step 3
 We need to install updated compilers, an updated Git, & cURL.
 ```
