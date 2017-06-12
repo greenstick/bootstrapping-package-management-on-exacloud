@@ -167,7 +167,7 @@ Finally, some packages that may be of interest to install *while not on the head
 #
 
 # R Language
-brew install science/r
+brew install homebrew/science/r
 
 # Python 2.7.x
 brew install python
@@ -182,7 +182,7 @@ brew install jdk
 brew install jdk7
 
 # Octave
-brew install science/octave
+brew install homebrew/science/octave
 
 # Ruby
 brew install ruby
@@ -195,52 +195,52 @@ brew install node
 #
 
 # Bowtie
-brew install science/bowtie
+brew install homebrew/science/bowtie
 
 # Bowtie 2
-brew install science/bowtie2
+brew install homebrew/science/bowtie2
 
 # BWA
-brew install science/bwa
+brew install homebrew/science/bwa
 
 # Clustal W
-brew install science/clustal-w
+brew install homebrew/science/clustal-w
 
 # Clustal Omega
-brew install science/clustal-omega
+brew install homebrew/science/clustal-omega
 
 # Cufflinks
-brew install science/cufflinks
+brew install homebrew/science/cufflinks
 
 # FastQC
-brew install science/fastqc
+brew install homebrew/science/fastqc
 
 # GATK
-brew install science/gatk
+brew install homebrew/science/gatk
 
 # Novoaligner
-brew install science/novoaligner
+brew install homebrew/science/novoaligner
 
 # Picard
-brew install science/picard-tools
+brew install homebrew/science/picard-tools
 
 # Samtools
-brew install science/samtools
+brew install homebrew/science/samtools
 
 # Snpeff
-brew install science/snpeff
+brew install homebrew/science/snpeff
 
 # Soap deNovo
-brew install science/soapdenovo
+brew install homebrew/science/soapdenovo
 
 # SRA Toolkit
-brew install science/sratoolkit
+brew install homebrew/science/sratoolkit
 
 # Tophat
-brew install science/tophat
+brew install homebrew/science/tophat
 
 # Velvet
-brew install science/velvet
+brew install homebrew/science/velvet
 ```
 Note: *Some of the real benefits of Linuxbrew (and any package manager) are consistency in installation practices, smart (automated) dependency management, and ease of versioning. That said, ExaCloud does have some of the software provided by the recipes above pre-installed. To see what software (and versions) are already installed, check out [exainfo.ohsu.edu](http://exainfo.ohsu.edu) (you must be logged on to the OHSU network). If you're interested in specific versions of a software, see the [Linuxbrew documentation](http://linuxbrew.sh) or type `man brew` into your terminal to learn how to install a specific version.*
 
