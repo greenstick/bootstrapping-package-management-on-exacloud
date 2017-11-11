@@ -7,7 +7,7 @@ brew install PACKAGE
 
 Pretty nifty, eh?
 
-And as an added bonus, if you've ever had errors compiling packages on ExaCloud due to unsupported (old) compilers, the setup has been designed to resolve these issues as well.
+And as an added bonus, if you've ever had errors compiling packages on ExaCloud due to unsupported (old) compilers, the setup has been designed to resolve these issues as well. That said, the compiler issues seems to have been resolved by recent upgrades to ExaCloud. 
 
 ### Uhhh...This Don't Work
 If you run into any issues or have questions, please create an [Issue](https://github.com/greenstick/bootstrapping-package-management-on-exacloud/issues/new) and I'll try and address them promptly – the aim is to make this guide as easy to use and straightforward as possible. 
@@ -57,12 +57,7 @@ Note: *If you used an alternate path for your Miniconda installation, be sure to
 Exit the interactive session and log off of ExaCloud. Log back on, and the changes to your `~/.bash_profile` will take effect.
 
 ### Step 5
-Are you reaching for an interactive session on the child node? That's great, but not so fast! We'll actually be installing Linuxbrew on the head node. However, before doing so, it's worth explaining the rationale behind why we'll be using the head node (because it's an exception to a general rule of thumb when using any cluster computer: Always do your computing on a child node): 
-* Ruby is not available on the child nodes and is required to install Linuxbrew.
-* The head node is designed to handle a degree of network traffic; the linuxbrew package is a small (~1MB) and a one time installation requiring no significant system resources (i.e. compilation).
-* This quick network request is less resource intensive than downloading and installing Ruby (which, given the average ExaCloud user, is unlikely to be used outside of this guide anyway).
-
-So, to install Linuxbrew, copy the command below:
+Next, let's install Linuxbrew:
 ```
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install)"
 ```
@@ -83,7 +78,7 @@ condor_submit --interactive
 # Wait for a moment while ExaCloud logs you onto a child node...then...
 brew doctor
 ```
-Note: *When working with Linuxbrew, it's always a good idea to run `brew doctor` before you install anything (i.e. any day you log on to ExaCloud and decide to install or update your packages). This ensures that you won't install packages that break or fail to install due to an incorrect Linuxbrew configuration or package dependency. If you do see any new Warning messages, its a good idea to copy them each into a search engine and make sure that none will cause you any trouble.*
+Note: *When working with Linuxbrew, it's always a good idea to run `brew doctor` before you install anything (i.e. any day you log on to ExaCloud and decide to install or update your packages). Doing so ensures that you won't install packages that break or fail to install due to an incorrect Linuxbrew configuration or package dependency. If you do see any new Warning messages, its a good idea to copy them each into a search engine and make sure that none will cause you any trouble. Also more recent versions of Linuxbrew automatically update before installing any packages, however, if you're installation doesn't do this, be sure to calle `brew update` before installing any packages.*
 
 You may get some warnings. Most of these warnings shouldn't cause you (or your installed packages!) any trouble. The ones I get are (you may see a few more, to understand why see Step 8):
 ```
@@ -106,7 +101,7 @@ script of the same name. We found the following "config" scripts:
   /opt/rocks/bin/python2.6-config
 ```
 
-If you got any other warnings, check Stackoverflow to make sure they're not important and, if you're feeling ambitious, follow the steps to clear them – but be careful; if you're not starting fresh you could upset software that you already have installed. I should also note that some warnings can't and shouldn't be cleared as they require file and directory privileges not available to non-administators on ExaCloud. For example:
+If you got any other warnings, check Stackoverflow to make sure they're not important and, if you're feeling ambitious, follow the steps to clear them – but be careful; if you're not starting fresh you could upset software that you already have installed. I should also note that some warnings can't and shouldn't be cleared as they require file and directory privileges not available to non-administators on ExaCloud. For example, you should not attempt to clear the following warning:
 ```
 Having additional scripts in your path can confuse software installed via
 Homebrew if the config script overrides a system or Homebrew provided
@@ -118,7 +113,7 @@ script of the same name. We found the following "config" scripts:
 ```
 
 ### Step 8 (Optional Cleanup)
-Strictly speaking, once you have Linuxbrew you don't need Miniconda and can delete it. That said, I've found certain dependencies available on Miniconda that aren't explicitly available on Linuxbrew. Of course, it's also great for managing virtual environments and installing Python packages (i.e. it works in place of `pip`):
+Strictly speaking, if Python isn't your jam, once you have Linuxbrew you don't need Miniconda and can delete it. That said, I've found certain system level dependencies available on Miniconda that aren't explicitly available on Linuxbrew. Of course, if you are a Pythonista, it's also great for managing virtual environments and installing Python packages (i.e. it works in place of `pip`):
 ```
 # For example...
 conda install numpy
@@ -160,7 +155,7 @@ A few notes on Step 8:
 * It may not be strictly required to set the build variables above unless you're compiling your own source code (i.e. in C/C++, etc.), but it's nonetheless a good idea to set them up so you won't encounter any future problems should the occasion arise. 
 
 #### Reap The Rewards (and Some Final Details)!
-Finally, some packages that may be of interest to install *while not on the head node* (because that's what we're really after, right?)
+Finally, some packages that may be of interest to install:
 ```
 #
 # Some Languages
